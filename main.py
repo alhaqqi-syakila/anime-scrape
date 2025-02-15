@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template
 import requests
 from bs4 import BeautifulSoup
 import re
@@ -23,14 +23,13 @@ USER_AGENTS = [
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Safari/605.1.15",
     "Mozilla/5.0 (Linux; Android 10; Pixel 3 XL) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Mobile Safari/537.36",
-    # Add more User-Agent strings as needed
 ]
 CACHE_EXPIRE_TIME = 3600  # 1 hour cache expiration
 
 # Cache variables
 _news_cache = {"data": None, "timestamp": None}
 _anime_detail_cache = {}
-_episode_video_cache = {} 
+_episode_video_cache = {}
 
 def is_cache_valid(timestamp, expire_seconds=CACHE_EXPIRE_TIME):
     """Check if cache is still valid"""
@@ -318,9 +317,9 @@ def page_not_found(e):
 def server_error(e):
     return render_template("error.html", message="Terjadi kesalahan pada server"), 500
 
-# Configuration for Vercel
-app.debug = False
+# Configuration for local development
+app.debug = True  # Enable debug mode for local development
 
 # Original run block
 if __name__ == "__main__":
-    app.run()
+    app.run(host='0.0.0.0', port=5000)  # Run on all interfaces
