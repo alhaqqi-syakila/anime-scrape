@@ -30,7 +30,7 @@ CACHE_EXPIRE_TIME = 3600  # 1 hour cache expiration
 # Cache variables
 _news_cache = {"data": None, "timestamp": None}
 _anime_detail_cache = {}
-_episode_video_cache = {}
+_episode_video_cache = {} 
 
 def is_cache_valid(timestamp, expire_seconds=CACHE_EXPIRE_TIME):
     """Check if cache is still valid"""
