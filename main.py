@@ -5,8 +5,9 @@ import re
 import logging
 import time
 from datetime import datetime, timedelta
+import random
 
-# Set up logging for Vercel (no file logging)
+# Set up logging
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -18,10 +19,15 @@ app = Flask(__name__)
 
 # Constants
 BASE_URL = "https://otakudesu.cloud"
-USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+USER_AGENTS = [
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Safari/605.1.15",
+    "Mozilla/5.0 (Linux; Android 10; Pixel 3 XL) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Mobile Safari/537.36",
+    # Add more User-Agent strings as needed
+]
 CACHE_EXPIRE_TIME = 3600  # 1 hour cache expiration
 
-# Cache variables for Vercel environment
+# Cache variables
 _news_cache = {"data": None, "timestamp": None}
 _anime_detail_cache = {}
 _episode_video_cache = {}
@@ -37,7 +43,7 @@ def is_cache_valid(timestamp, expire_seconds=CACHE_EXPIRE_TIME):
 
 def get_soup(url):
     """Helper function to fetch HTML with error handling and caching"""
-    headers = {"User-Agent": USER_AGENT}
+    headers = {"User -Agent": random.choice(USER_AGENTS)}  # Randomly select a User-Agent
     try:
         logger.info(f"Fetching URL: {url}")
         response = requests.get(url, headers=headers, timeout=5)  # Reduced timeout for Vercel
