@@ -1,3 +1,4 @@
-flask==2.3.2
-groq
+Flask
+requests
 beautifulsoup4
+gunicorn
