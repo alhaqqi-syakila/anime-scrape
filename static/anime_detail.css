@@ -1,0 +1,243 @@
+:root {
+    --primary-color: #f47521;
+    --secondary-color: #23252b;
+    --white-color: #ffffff;
+    --text-color: #a8a8a8;
+    --background-color: #15161b;
+    --card-background: #23252b;
+    --hover-color: #f85d2c;
+    --border-color: #393b40;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1 {
+    color: var(--primary-color);
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    font-weight: 700;
+}
+
+/* Main card container */
+.anime-card {
+    background-color: var(--card-background);
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    padding: 25px;
+    margin-bottom: 40px;
+}
+
+/* Top section with image and basic details */
+.top-section {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 30px;
+    margin-bottom: 25px;
+}
+
+.anime-image img {
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+/* Basic details section */
+.basic-details h2 {
+    color: var(--white-color);
+    margin-top: 0;
+    font-size: 1.8rem;
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 12px;
+    margin-bottom: 20px;
+}
+
+.info-item {
+    margin-bottom: 16px;
+}
+
+.info-label {
+    color: var(--primary-color);
+    font-weight: 600;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.info-content {
+    color: var(--white-color);
+}
+
+.score-badge {
+    display: inline-flex;
+    align-items: center;
+    background-color: var(--primary-color);
+    color: var(--white-color);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-weight: bold;
+    margin-bottom: 16px;
+}
+
+.score-badge i {
+    margin-right: 5px;
+}
+
+.genre-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.genre-tag {
+    background-color: rgba(244, 117, 33, 0.2);
+    color: var(--primary-color);
+    padding: 4px 12px;
+    border-radius: 16px;
+    font-size: 0.9rem;
+}
+
+/* Synopsis section - full width */
+.synopsis-section {
+    border-top: 1px solid var(--border-color);
+    padding-top: 20px;
+}
+
+.synopsis-section .info-label {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.synopsis-section .info-content {
+    line-height: 1.8;
+    text-align: justify;
+}
+
+/* Read More functionality for synopsis */
+.synopsis-container {
+    position: relative;
+}
+
+.synopsis-text {
+    margin-bottom: 10px;
+}
+
+.read-more-button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 5px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.3s;
+}
+
+.read-more-button:hover {
+    background-color: var(--hover-color);
+}
+
+/* Only apply height limit and read more on mobile */
+@media (max-width: 768px) {
+    .synopsis-text.collapsed {
+        max-height: 5.2em; /* Show 3 lines (1.6 x 3) */
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+    }
+
+    .show-less {
+        display: none;
+    }
+    
+    .expanded .show-more {
+        display: none;
+    }
+    
+    .expanded .show-less {
+        display: inline;
+    }
+}
+
+/* Episode section */
+h2.episode-header {
+    color: var(--primary-color);
+    font-size: 1.8rem;
+    margin: 40px 0 20px;
+}
+
+.episode-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px 0;
+}
+
+.episode-card {
+    background-color: var(--card-background);
+    padding: 15px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.episode-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(244, 117, 33, 0.3);
+    background-color: var(--secondary-color);
+}
+
+.episode-card a {
+    color: var(--text-color);
+    text-decoration: none;
+    display: block;
+    font-size: 1.1rem;
+    padding-left: 40px;  /* Memberi ruang untuk nomor episode */
+}
+
+.episode-card:hover a {
+    color: var(--primary-color);
+}
+
+.episode-number {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--primary-color);
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+@media (max-width: 768px) {
+    .top-section {
+        grid-template-columns: 1fr;
+    }
+    .anime-image img {
+        max-width: 300px;
+        margin: 0 auto;
+        display: block;
+    }
+    .episode-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+}
+
+@media (max-width: 480px) {
+    .episode-grid {
+        grid-template-columns: 1fr;
+    }
+}   

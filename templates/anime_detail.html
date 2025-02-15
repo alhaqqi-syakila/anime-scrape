@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail Anime - {{ anime. title }}</title>
+    <link rel="stylesheet" href="/static/anime_detail.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1>{{ anime.title }}</h1>
+       
+        <div class="anime-card">
+            <!-- Top section with image and basic details -->
+            <div class="top-section">
+                <!-- Image section -->
+                <div class="anime-image">
+                    <img src="{{ anime.image_url }}" alt="{{ anime.judul }}">
+                </div>
+                
+                <!-- Basic details section -->
+                <div class="basic-details">
+                    <h2>Detail Anime</h2>
+                    
+                    <!-- Score with star icon -->
+                    <div class="info-item">
+                        <div class="score-badge">
+                            <i class="fas fa-star"></i>
+                            {{ anime.score }}
+                        </div>
+                    </div>
+                    
+                    <!-- Genres as tags -->
+                    <div class="info-item">
+                        <span class="info-label">Genres</span>
+                        <div class="genre-tags info-content">
+                            {% for genre in anime.genre.split(', ') %}
+                                <span class="genre-tag">{{ genre }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    
+                    <!-- Producer -->
+                    <div class="info-item">
+                        <span class="info-label">Producer</span>
+                        <span class="info-content">{{ anime.producer }}</span>
+                    </div>     
+                    
+                    <!-- Studio -->
+                    <div class="info-item">
+                        <span class="info-label">Studio</span>
+                        <span class="info-content">{{ anime.studio }}</span>
+                    </div>
+                    
+                    <!-- Release date -->
+                    <div class="info-item">
+                        <span class="info-label">Release Date</span>
+                        <span class="info-content">{{ anime.release_date }}</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Synopsis section - full width -->
+            <div class="synopsis-section">
+                <span class="info-label">Sinopsis</span>
+                <div class="synopsis-container">
+                    <div class="synopsis-text collapsed info-content">
+                        {{ anime.sinopsis }}
+                    </div>
+                    <button class="read-more-button">
+                        <span class="show-more">Baca Selengkapnya</span>
+                        <span class="show-less">Sembunyikan</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <h2 class="episode-header">Daftar Episode</h2>
+        <div class="episode-grid">
+            {% with total_episodes = anime.episodes|length %}
+                {% for ep in anime.episodes %}
+                    <div class="episode-card">
+                        <span class="episode-number">{{ total_episodes - loop.index0 }}</span>
+                        <a href="{{ ep.link }}" target="_blank">{{ ep.title }}</a>
+                    </div>
+                {% else %}
+                    <div class="episode-card">
+                        <p>Tidak ada episode yang ditemukan.</p>
+                    </div>
+                {% endfor %}
+            {% endwith %}
+        </div>
+    </div>
+
+    <!-- JavaScript untuk fungsi Read More -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const synopsisText = document.querySelector('.synopsis-text');
+            const readMoreButton = document.querySelector('.read-more-button');
+            
+            // Hanya tampilkan tombol jika di mobile view dan sinopsis cukup panjang
+            if (window.innerWidth <= 768 && synopsisText.scrollHeight > synopsisText.clientHeight) {
+                readMoreButton.style.display = 'block';
+            } else {
+                readMoreButton.style.display = 'none';
+            }
+            
+            readMoreButton.addEventListener('click', function() {
+                const synopsisContainer = document.querySelector('.synopsis-container');
+                
+                if (synopsisText.classList.contains('collapsed')) {
+                    synopsisText.classList.remove('collapsed');
+                    synopsisContainer.classList.add('expanded');
+                } else {
+                    synopsisText.classList.add('collapsed');
+                    synopsisContainer.classList.remove('expanded');
+                }
+            });
+            
+            // Update tampilan tombol saat resize
+            window.addEventListener('resize', function() {
+                if (window.innerWidth <= 768 && synopsisText.scrollHeight > synopsisText.clientHeight) {
+                    readMoreButton.style.display = 'block';
+                } else {
+                    readMoreButton.style.display = 'none';
+                    // Reset ke tampilan penuh pada desktop
+                    if (window.innerWidth > 768) {
+                        synopsisText.classList.remove('collapsed');
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

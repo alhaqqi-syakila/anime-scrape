@@ -1,0 +1,27 @@
+# Direktori dan file Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment
+venv/
+env/
+.venv/
+ENV/
+.ENV/
+
+# File konfigurasi dan kredensial
+*.env
+.env.local
+instance/
+config.py
+
+# File log dan cache
+*.log
+logs/
+debug.log
+.DS_Store
+
+# Vercel build folder
+.vercel/

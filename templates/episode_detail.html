@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nonton - {{ video.episode_title }}</title>
+    <link rel="stylesheet" href="/static/episode_detail.css">
+</head>
+<body>
+    <div class="page-wrapper">
+        <div class="container">
+            <header class="header">
+                <div class="header-titles">
+                    <h1>Sekarang Menonton</h1>
+                    <h2>{{ video.episode_title }}</h2>
+                    <p>{{ video.genre }}</p>
+                </div>
+                <a href="/" class="nav-button">Kembali ke Beranda</a>
+            </header>
+
+            <div class="main-content">
+                <div class="video-section">
+                    {% if video.video_url != "Video tidak ditemukan." %}
+                        <div class="video-wrapper">
+                            <iframe src="{{ video.video_url }}" allowfullscreen></iframe>
+                        </div>
+                    {% else %}
+                        <div class="error-message">
+                            <p>Video tidak ditemukan.</p>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <aside class="sidebar">
+                    <div class="sidebar-widget">
+                        <h2>Daftar Episode Lain</h2>
+                        <div class="episode-list">
+                            <ul>
+                                {% if video.all_episodes %}
+                                    {% for episode in video.all_episodes %}
+                                        <li><a href="{{ episode.link }}">{{ episode.title }}</a></li>
+                                    {% endfor %}
+                                {% else %}
+                                    <li>Episode lain tidak ditemukan.</li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+
+            <footer class="footer">
+                <p>© 2024 Anime Streaming. Semua hak cipta dilindungi.</p>
+            </footer>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anime Terbaru - Haqqi Films</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="site-header">
+            <div class="logo">
+                <i class="fas fa-play-circle"></i>
+                <h1>Haqqi Films</h1>
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="Cari anime...">
+                <button type="submit"><i class="fas fa-search"></i></button>
+            </div>
+        </header>
+        
+        <h2>Anime Terbaru</h2>
+        
+        <div class="anime-grid">
+            {% for anime in data %}
+                <div class="anime-card">
+                    <div class="card-image-container">
+                        <span class="category">Series</span>
+                        <a href="{{ anime.link }}" target="_blank">
+                            <img src="{{ anime.image_url }}" alt="Gambar {{ anime.title }}">
+                            <div class="overlay"></div>
+                        </a>
+                    </div>
+                    <div class="anime-info">
+                        <span class="date">{{ anime.date }}</span>
+                        <h3 class="title"><a href="{{ anime.link }}" target="_blank">{{ anime.title }}</a></h3>
+                        <p><i class="fas fa-video"></i> {{ anime.episode }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        
+        <a href="#" class="load-more">Lihat Lebih Banyak</a>
+        
+        <footer class="footer">
+            <p>© 2025 Haqqi Films. Semua hak dilindungi.</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-discord"></i></a>
+            </div>
+        </footer>
+    </div>
+    
+    <script>
+        // Add some simple animations when the page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.anime-card');
+            
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.style.opacity = 0;
+                    card.style.transform = 'translateY(20px)';
+                    card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                    
+                    setTimeout(() => {
+                        card.style.opacity = 1;
+                        card.style.transform = 'translateY(0)';
+                    }, 100);
+                }, index * 100);
+            });
+        });
+    </script>
+</body>
+</html>
