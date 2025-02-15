@@ -3,14 +3,14 @@ import requests
 from bs4 import BeautifulSoup
 import re
 import logging
-from functools import lru_cache
 import time
+from datetime import datetime, timedelta
 
-# Set up logging
+# Set up logging for Vercel (no file logging)
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    handlers=[logging.FileHandler("app.log"), logging.StreamHandler()]
+    handlers=[logging.StreamHandler()]
 )
 logger = logging.getLogger(__name__)
 
@@ -21,24 +21,28 @@ BASE_URL = "https://otakudesu.cloud"
 USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
 CACHE_EXPIRE_TIME = 3600  # 1 hour cache expiration
 
-# Cache for storing scraped data
-cache = {}
+# Cache variables for Vercel environment
+_news_cache = {"data": None, "timestamp": None}
+_anime_detail_cache = {}
+_episode_video_cache = {}
 
+def is_cache_valid(timestamp, expire_seconds=CACHE_EXPIRE_TIME):
+    """Check if cache is still valid"""
+    if not timestamp:
+        return False
+    if isinstance(timestamp, datetime):
+        return datetime.now() - timestamp < timedelta(seconds=expire_seconds)
+    else:
+        return time.time() - timestamp < expire_seconds
 
 def get_soup(url):
     """Helper function to fetch HTML with error handling and caching"""
-    # Check cache first
-    if url in cache and time.time() - cache[url]["timestamp"] < CACHE_EXPIRE_TIME:
-        return cache[url]["data"]
-    
     headers = {"User-Agent": USER_AGENT}
     try:
         logger.info(f"Fetching URL: {url}")
-        response = requests.get(url, headers=headers, timeout=10)
+        response = requests.get(url, headers=headers, timeout=5)  # Reduced timeout for Vercel
         if response.status_code == 200:
-            soup = BeautifulSoup(response.content, "html.parser")
-            # Store in cache
-            cache[url] = {"data": soup, "timestamp": time.time()}
+            soup = BeautifulSoup(response.content, "html.parser")  # Using html.parser instead of lxml
             return soup
         else:
             logger.error(f"Error {response.status_code}: Failed to fetch page {url}")
@@ -50,25 +54,26 @@ def get_soup(url):
         logger.error(f"Unexpected error for {url}: {e}")
         return None
 
-
 def extract_text(element, default="Data tidak tersedia"):
     """Safely extract text from a BS4 element"""
     return element.text.strip() if element else default
-
 
 def extract_attribute(element, attr, default=""):
     """Safely extract attribute from a BS4 element"""
     return element[attr] if element and attr in element.attrs else default
 
-
 def clean_text(text, pattern, replacement=""):
     """Clean text using regex pattern"""
     return re.sub(pattern, replacement, text).strip()
 
-
-@lru_cache(maxsize=32)
 def scrape_news():
     """Scrape the latest anime news with caching"""
+    global _news_cache
+    
+    # Check cache first
+    if is_cache_valid(_news_cache["timestamp"]):
+        return _news_cache["data"]
+    
     url = f"{BASE_URL}/"
     soup = get_soup(url)
     if not soup:
@@ -107,12 +112,18 @@ def scrape_news():
     except Exception as e:
         logger.error(f"Error scraping news: {e}")
 
+    # Update cache
+    _news_cache = {"data": anime_list, "timestamp": datetime.now()}
     return anime_list
 
-
-@lru_cache(maxsize=100)
 def scrape_anime_detail(title_slug):
     """Scrape anime details with caching"""
+    global _anime_detail_cache
+    
+    # Check cache first
+    if title_slug in _anime_detail_cache and is_cache_valid(_anime_detail_cache[title_slug]["timestamp"]):
+        return _anime_detail_cache[title_slug]["data"]
+    
     title_slug = title_slug.replace("-sub-indo", "")
     url = f"{BASE_URL}/anime/{title_slug}-sub-indo/"
     soup = get_soup(url)
@@ -174,26 +185,34 @@ def scrape_anime_detail(title_slug):
                     ep_title = extract_text(ep_link_tag)
                     episodes.append({"title": ep_title, "link": f"/episode/{ep_slug}"})
 
+        result = {
+            "title": title_tag,
+            "image_url": image_url,
+            "score": anime_info["score"],
+            "genre": anime_info["genre"],
+            "producer": anime_info["producer"],
+            "studio": anime_info["studio"],
+            "release_date": anime_info["release_date"],
+            "sinopsis": sinopsis,
+            "episodes": episodes
+        }
+        
+        # Update cache
+        _anime_detail_cache[title_slug] = {"data": result, "timestamp": datetime.now()}
+        return result
+        
     except Exception as e:
         logger.error(f"Error scraping anime detail for {title_slug}: {e}")
         return {}
 
-    return {
-        "title": title_tag,
-        "image_url": image_url,
-        "score": anime_info["score"],
-        "genre": anime_info["genre"],
-        "producer": anime_info["producer"],
-        "studio": anime_info["studio"],
-        "release_date": anime_info["release_date"],
-        "sinopsis": sinopsis,
-        "episodes": episodes
-    }
-
-
-@lru_cache(maxsize=200)
 def scrape_episode_video(episode_slug):
     """Scrape episode video with caching"""
+    global _episode_video_cache
+    
+    # Check cache first
+    if episode_slug in _episode_video_cache and is_cache_valid(_episode_video_cache[episode_slug]["timestamp"]):
+        return _episode_video_cache[episode_slug]["data"]
+    
     url = f"{BASE_URL}/episode/{episode_slug}/"
     soup = get_soup(url)
     if not soup:
@@ -231,18 +250,21 @@ def scrape_episode_video(episode_slug):
         if anime_slug:
             anime_data = scrape_anime_detail(anime_slug)
             all_episodes = anime_data.get("episodes", [])
+            
+        result = {
+            "episode_title": episode_title,
+            "video_url": video_url,
+            "genre": genre,
+            "all_episodes": all_episodes
+        }
+        
+        # Update cache
+        _episode_video_cache[episode_slug] = {"data": result, "timestamp": datetime.now()}
+        return result
 
     except Exception as e:
         logger.error(f"Error scraping episode video for {episode_slug}: {e}")
         return {}
-
-    return {
-        "episode_title": episode_title,
-        "video_url": video_url,
-        "genre": genre,
-        "all_episodes": all_episodes
-    }
-
 
 # Routes
 @app.route("/")
@@ -253,7 +275,6 @@ def main():
     except Exception as e:
         logger.error(f"Error in main route: {e}")
         return render_template("error.html", message="Terjadi kesalahan saat memuat halaman utama")
-
 
 @app.route("/anime/<title_slug>")
 def anime_detail(title_slug):
@@ -266,7 +287,6 @@ def anime_detail(title_slug):
         logger.error(f"Error in anime_detail route for {title_slug}: {e}")
         return render_template("error.html", message="Terjadi kesalahan saat memuat detail anime")
 
-
 @app.route("/episode/<episode_slug>")
 def episode_detail(episode_slug):
     try:
@@ -278,19 +298,23 @@ def episode_detail(episode_slug):
         logger.error(f"Error in episode_detail route for {episode_slug}: {e}")
         return render_template("error.html", message="Terjadi kesalahan saat memuat episode")
 
+# Add cache-control headers
+@app.after_request
+def add_header(response):
+    response.headers['Cache-Control'] = 'public, max-age=300'  # cache for 5 minutes
+    return response
 
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template("error.html", message="Halaman tidak ditemukan"), 404
 
-
 @app.errorhandler(500)
 def server_error(e):
     return render_template("error.html", message="Terjadi kesalahan pada server"), 500
 
+# Configuration for Vercel
+app.debug = False
 
-# if __name__ == "__main__":
-#     app.run(host="127.0.0.1", port=5000, debug=True)
-
+# Original run block
 if __name__ == "__main__":
     app.run()
