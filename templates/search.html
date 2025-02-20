@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Anime - HaStream</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/search.css">
+</head>
+<body>
+    <div class="container">
+        <header class="site-header">
+            <div class="logo">
+                <i class="fa-solid fa-vihara"></i>
+                <h1>HaStream</h1>
+            </div>
+            <div class="search-bar">
+                <form action="/" method="get">
+                    <input type="hidden" name="post_type" value="anime">
+                    <input type="text" id="s" name="s" placeholder="Search anime..." value="{{ query }}" required>
+                    <button type="submit"><i class="fas fa-search"></i></button>
+                </form>
+            </div>
+            <div class="btn-list">
+                <a href="/" class="nav-button"> Home</a>
+                <a href="/genre-list" class="nav-button">Genre List</a>
+            </div>
+        </header>
+
+        <section class="anime-section">
+            <h2 class="title-search"><i class="fas fa-search"></i> Results for "{{ query }}"</h2>
+            <div class="anime-grid">
+                {% if results %}
+                    {% for anime in results %}
+                        <div class="anime-card">
+                            <div class="card-image-container">
+                                <span class="category">{{ anime.status }}</span>
+                                <a href="{{ anime.link }}">
+                                    <img src="{{ anime.image_url }}" alt="Gambar {{ anime.title }}">
+                                    <div class="overlay"></div>
+                                </a>
+                            </div>
+                            <div class="anime-info">
+                                <h3 class="title" title="{{ anime.title }}"><a href="{{ anime.link }}">{{ anime.title }}</a></h3>
+                                <div class="anime-info-row">
+                                    <p>
+                                        {% for genre in anime.genre.split(', ') %}
+                                        <a href="{{ url_for('genre_page', genre_slug=genre.lower().replace(' ', '-')) }}" 
+                                           class="genre-badge">
+                                            {{ genre }}
+                                        </a>
+                                        {% endfor %}
+                                    </p>
+                                </div>                              
+                                <p class="rating"><i class="fa fa-star" aria-hidden="true"></i> {{ anime.rating if anime.rating else '-'}}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+            </section>
+            <div class="empty">
+                <i class="fa-solid fa-folder-open" aria-hidden="true"></i>
+                <p class="not-found">Anime tidak ditemukan</p>
+            </div>
+            {% endif %}
+
+        <footer class="footer">
+            <p>© 2025 HaStream. All rights reserved.</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-discord"></i></a>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

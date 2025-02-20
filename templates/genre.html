@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h2 class="">{{ genre_name }} Anime</h2>
+   
+    {% if anime_list %}
+    <section class="anime-section">
+        <div class="anime-grid">
+            {% for anime in anime_list %}
+            <div class="anime-card">
+                <div class="card-image-container">
+                    <span class="category">{{anime.rating if anime.rating else 'N/A'}}</span>
+                    <a href="{{ anime.detail_url }}" target="_blank">
+                        <img src="{{ anime.cover_url }}" alt="Gambar {{ anime.title }}">
+                        <div class="overlay"></div>
+                    </a>
+                </div>
+                <div class="anime-info">
+                    <span class="date">{{ anime.release_date if anime.release_date else "N/A"}}</span>
+                    <h3 class="title"><a href="{{ anime.detail_url }}" target="_blank">{{ anime.title }}</a></h3>
+                    <p><i class="fas fa-video"></i> &nbsp; {{ "N/A" if anime.episodes == "Unknown Eps" else anime.episodes }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+<!-- Pagination Section -->
+{% if last_page > 1 %}
+<div class="pagination-container">
+    <nav class="pagination">
+        <!-- Previous Button -->
+        {% if current_page > 1 %}
+        <a href="{{ url_for('genre_page', genre_slug=genre_slug, page=current_page-1) }}" class="page-btn prev-btn">
+            <i class="fa fa-arrow-left" aria-hidden="true"></i>
+        </a>
+        {% endif %}
+
+        <!-- Page Numbers -->
+        <!-- Always show the first page -->
+        <a href="{{ url_for('genre_page', genre_slug=genre_slug, page=1) }}" class="page-number {% if current_page == 1 %}active{% endif %}">1</a>
+
+        <!-- Show ellipsis if current page is far from the first page -->
+        <!-- {% if current_page > 4 %}
+            <span class="page-dots">...</span>
+        {% endif %} -->
+
+        <!-- Show pages around the current page -->
+        {% for p in range([2, current_page - 1]|max, [current_page + 2, last_page]|min + 1) %}
+            {% if p == current_page %}
+                <span class="page-number active">{{ p }}</span>
+            {% else %}
+                <a href="{{ url_for('genre_page', genre_slug=genre_slug, page=p) }}" class="page-number">{{ p }}</a>
+            {% endif %}
+        {% endfor %}
+
+        <!-- Show ellipsis if current page is far from the last page -->
+        {% if current_page < last_page - 3 %}
+            <span class="page-dots">...</span>
+        {% endif %}
+
+        <!-- Always show the last page if it's not the first page -->
+        {% if last_page != 1 %}
+            <a href="{{ url_for('genre_page', genre_slug=genre_slug, page=last_page) }}" class="page-number {% if current_page == last_page %}active{% endif %}">{{ last_page }}</a>
+        {% endif %}
+
+        <!-- Next Button -->
+        {% if current_page < last_page %}
+        <a href="{{ url_for('genre_page', genre_slug=genre_slug, page=current_page+1) }}" class="page-btn next-btn">
+            <i class="fa fa-arrow-right" aria-hidden="true"></i>
+        </a>
+        {% endif %}
+    </nav>
+</div>
+{% endif %}
+
+    {% else %}
+        <p class="text-center text-gray-600">No anime found for this genre.</p>
+    {% endif %}
+</div>
+{% endblock %}

@@ -3,19 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nonton - {{ video.episode_title }}</title>
-    <link rel="stylesheet" href="/static/episode_detail.css">
+    <title>Watch - {{ video.episode_title }}</title>
+    <link rel="stylesheet" href="/static/episode_detail.css">f
+    <script src='https://kit.fontawesome.com/7f1688b379.js' crossorigin='anonymous'></script>
 </head>
 <body>
     <div class="page-wrapper">
         <div class="container">
             <header class="header">
                 <div class="header-titles">
-                    <h1>Sekarang Menonton</h1>
+                    <h1>NOW WATCH</h1>
                     <h2>{{ video.episode_title }}</h2>
                     <p>{{ video.genre }}</p>
                 </div>
-                <a href="/" class="nav-button">Kembali ke Beranda</a>
+                <a href="/" class="nav-button">Back to Home</a>
             </header>
 
             <div class="main-content">
@@ -26,14 +27,14 @@
                         </div>
                     {% else %}
                         <div class="error-message">
-                            <p>Video tidak ditemukan.</p>
+                            <p>Video not found</p>
                         </div>
                     {% endif %}
                 </div>
 
                 <aside class="sidebar">
                     <div class="sidebar-widget">
-                        <h2>Daftar Episode Lain</h2>
+                        <h2>Other Episodes <i class="fa-solid fa-angles-down"></i></h2>
                         <div class="episode-list">
                             <ul>
                                 {% if video.all_episodes %}
@@ -50,7 +51,14 @@
             </div>
 
             <footer class="footer">
-                <p>© 2024 Anime Streaming. Semua hak cipta dilindungi.</p>
+                <p>© 2025 Hastream. All rights reserved.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-discord"></i></a>
+                </div>
             </footer>
         </div>
     </div>

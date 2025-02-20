@@ -1,0 +1,8 @@
+.anime-info-row p{
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #9d9d9d;
+}

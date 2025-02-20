@@ -79,7 +79,7 @@ h1 {
     color: var(--white-color);
 }
 
-.score-badge {
+.score-badge, .genre-badge {
     display: inline-flex;
     align-items: center;
     background-color: var(--primary-color);
@@ -87,7 +87,7 @@ h1 {
     padding: 4px 12px;
     border-radius: 20px;
     font-weight: bold;
-    margin-bottom: 16px;
+    margin-bottom: 10px;
 }
 
 .score-badge i {
@@ -98,7 +98,6 @@ h1 {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
-    margin-bottom: 16px;
 }
 
 .genre-tag {
@@ -149,6 +148,37 @@ h1 {
     background-color: var(--hover-color);
 }
 
+
+/* Footer */
+.footer {
+    margin-top: 50px;
+    padding: 30px 0;
+    border-top: 1px solid rgba(168, 168, 168, 0.1);
+    text-align: center;
+}
+        
+.footer p {
+    color: var(--text-color);
+    font-size: 0.9rem;
+}
+        
+.social-links {
+    margin-top: 20px;
+}
+        
+.social-links a {
+    display: inline-block;
+    margin: 0 10px;
+    color: var(--text-color);
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+}
+        
+.social-links a:hover {
+    color: var(--primary-color);
+}
+
+
 /* Only apply height limit and read more on mobile */
 @media (max-width: 768px) {
     .synopsis-text.collapsed {
@@ -169,6 +199,10 @@ h1 {
     
     .expanded .show-less {
         display: inline;
+    }
+
+    h1 {
+        font-size: 1.5rem;
     }
 }
 
@@ -234,10 +268,29 @@ h2.episode-header {
     .episode-grid {
         grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     }
+
+    h1,h2 {
+        font-size: 1.5rem;
+    }
 }
 
 @media (max-width: 480px) {
     .episode-grid {
         grid-template-columns: 1fr;
+    }
+    h1, .basic-details h2, h2.episode-header {
+        font-size: 1.2rem;
+    }
+
+    .score-badge, .info-item, .synopsis-section .info-label {
+        font-size: .9rem;
+    }
+
+    .synopsis-text {
+        font-size: .9rem;
+    }
+
+    .episode-card a {
+        font-size: 0.9rem;
     }
 }   

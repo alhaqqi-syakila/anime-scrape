@@ -3,9 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detail Anime - {{ anime.title }}</title>
+    <title>Anime Details - {{ anime.title }}</title>
     <link rel="stylesheet" href="/static/anime_detail.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .genre-badge {
+            text-decoration: none;
+            background-color: rgba(244, 117, 33, 0.2);
+            color: var(--primary-color);
+            padding: 4px 12px;
+            border-radius: 16px;
+            font-size: 0.9rem;
+        }
+
+        .genre-badge:hover {
+            background-color: var(--hover-color);
+            color: white;
+        }
+
+        .genre-tags {
+            margin: 0;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -21,13 +40,13 @@
                 
                 <!-- Basic details section -->
                 <div class="basic-details">
-                    <h2>Detail Anime</h2>
+                    <h2>Anime Details</h2>
                     
                     <!-- Score with star icon -->
                     <div class="info-item">
                         <div class="score-badge">
                             <i class="fas fa-star"></i>
-                            {{ anime.score }}
+                            {{ anime.score if anime.score else 'N/A' }}
                         </div>
                     </div>
                     
@@ -35,48 +54,51 @@
                     <div class="info-item">
                         <span class="info-label">Genres</span>
                         <div class="genre-tags info-content">
-                            {% for genre in anime.genre.split(', ') %}
-                                <span class="genre-tag">{{ genre }}</span>
-                            {% endfor %}
+                                {% for genre in anime.genre.split(', ') %}
+                                <a href="{{ url_for('genre_page', genre_slug=genre.lower().replace(' ', '-')) }}" 
+                                   class="genre-badge">
+                                    {{ genre }}
+                                </a>
+                                {% endfor %}
                         </div>
                     </div>
                     
                     <!-- Producer -->
                     <div class="info-item">
                         <span class="info-label">Producer</span>
-                        <span class="info-content">{{ anime.producer }}</span>
+                        <span class="info-content">{{ anime.producer if anime.producer else '-'}}</span>
                     </div>     
                     
                     <!-- Studio -->
                     <div class="info-item">
                         <span class="info-label">Studio</span>
-                        <span class="info-content">{{ anime.studio }}</span>
+                        <span class="info-content">{{ anime.studio if anime.studio else '-' }}</span>
                     </div>
                     
                     <!-- Release date -->
                     <div class="info-item">
                         <span class="info-label">Release Date</span>
-                        <span class="info-content">{{ anime.release_date }}</span>
+                        <span class="info-content">{{ anime.release_date if anime.release_date else '-' }}</span>
                     </div>
                 </div>
             </div>
             
             <!-- Synopsis section - full width -->
             <div class="synopsis-section">
-                <span class="info-label">Sinopsis</span>
+                <span class="info-label">Synopsis</span>
                 <div class="synopsis-container">
                     <div class="synopsis-text collapsed info-content">
-                        {{ anime.sinopsis }}
+                        {{ anime.sinopsis if anime.sinopsis else 'Sorry, the synopsis is not yet available 🥺🙏' }}
                     </div>
                     <button class="read-more-button">
-                        <span class="show-more">Baca Selengkapnya</span>
-                        <span class="show-less">Sembunyikan</span>
+                        <span class="show-more">Show More</span>
+                        <span class="show-less">Show Less</span>
                     </button>
                 </div>
             </div>
         </div>
         
-        <h2 class="episode-header">Daftar Episode</h2>
+        <h2 class="episode-header">Episodes List</h2>
         <div class="episode-grid">
             {% with total_episodes = anime.episodes|length %}
                 {% for ep in anime.episodes %}
@@ -86,11 +108,22 @@
                     </div>
                 {% else %}
                     <div class="episode-card">
-                        <p>Tidak ada episode yang ditemukan.</p>
+                        <p>Episodes Not Available</p>
                     </div>
                 {% endfor %}
             {% endwith %}
         </div>
+
+        <footer class="footer">
+            <p>© 2025 Hastream. All rights reserved.</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-discord"></i></a>
+            </div>
+        </footer>
     </div>
 
     <!-- JavaScript untuk fungsi Read More -->

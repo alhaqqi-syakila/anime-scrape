@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HaStream - Genre List</title>
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/static/style.css"> <!-- Ensure this path is correct -->
+    
+    {% block extra_css %}{% endblock %}
+</head>
+<body >
+    <div class="container">
+        <header class="site-header">
+            <div class="logo">
+                <i class="fa-solid fa-vihara"></i>
+                <h1>HaStream</h1>
+            </div>
+            <div class="search-bar">
+                <form action="/" method="get">
+                    <input type="hidden" name="post_type" value="anime">
+                    <input type="text" id="s" name="s" placeholder="Search anime..." value="{{ query }}" required>
+                    <button type="submit"><i class="fas fa-search"></i></button>
+                </form>
+            </div>
+            <div class="btn-list">
+                <a href="/" class="nav-button">Home</a>
+                <a href="/genre-list" class="nav-button">Genre List</a>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="">
+            {% block content %}
+            <!-- Content from other pages will go here -->
+            {% endblock %}
+        </main>
+        <footer class="footer">
+            <p>© 2025 Hastream. All rights reserved.</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-discord"></i></a>
+            </div>
+        </footer>
+    </div>
+
+
+    <!-- JavaScript -->
+    <script>
+        // Basic scripts can be added here
+    </script>
+    
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

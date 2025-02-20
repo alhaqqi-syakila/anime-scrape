@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% block content %}
+    <h2><i class="fa-solid fa-scroll"></i> Genre List</h2>
+    {% if genres %}
+    <section class="list-section">
+        <div class="bento-container">
+            {% for genre in genres %}
+            <a class="bento-box" href="{{ genre.url }}">
+                <div class="genre-icon">
+                    {% if genre.name|lower == "action" %}
+                        <i class="fa-solid fa-gun"></i>
+                    {% elif genre.name|lower == "adventure" %}
+                        <i class="fa-solid fa-compass" aria-hidden="true"></i>
+                    {% elif genre.name|lower == "comedy" %}
+                        <i class="fa-solid fa-face-laugh-beam" aria-hidden="true"></i>
+                    {% elif genre.name|lower == "demons" %}
+                        <i class="fa-solid fa-ghost" aria-hidden="true"></i>
+                    {% elif genre.name|lower == "drama" %}
+                        <i class="fa-solid fa-masks-theater" aria-hidden="true"></i>
+                    {% elif genre.name|lower == "ecchi" %}
+                        <i class="fa-solid fa-trash" aria-hidden="true"></i>
+                    {% elif genre.name|lower == "fantasy" %}
+                        <i class="fa-solid fa-dragon" aria-hidden="true"></i>
+                    {% elif genre.name|lower == "game" %}
+                        <i class="fa-solid fa-gamepad"></i>
+                    {% elif genre.name|lower == "harem" %}
+                        <i class="fa-solid fa-users"></i>
+                    {% elif genre.name|lower == "horror" %}
+                        <i class="fa-solid fa-ghost" aria-hidden="true"></i>
+                    {% elif genre.name|lower == "josei" %}
+                        <i class="fa-solid fa-person-dress"></i>
+                    {% elif genre.name|lower == "magic" %}
+                        <i class="fa-solid fa-wand-sparkles" aria-hidden="true"></i>
+                    {% elif genre.name|lower == "martial arts" %}
+                        <i class="fa-solid fa-hand-fist" aria-hidden="true"></i>
+                    {% elif genre.name|lower == "mystery" %}
+                        <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                    {% elif genre.name|lower == "romance" %}
+                        <i class="fa-solid fa-heart" aria-hidden="true"></i>
+                    {% elif genre.name|lower == "sci-fi" %}
+                        <i class="fa-solid fa-spaghetti-monster-flying"></i>
+                    {% elif genre.name|lower == "slice of life" %}
+                        <i class="fa-solid fa-coffee" aria-hidden="true"></i>
+                    {% elif genre.name|lower == "sports" %}
+                        <i class="fa-solid fa-basketball" aria-hidden="true"></i>
+                    {% elif genre.name|lower == "supernatural" %}
+                        <i class="fa-solid fa-hamsa"></i>
+                    {% elif genre.name|lower == "mecha" %}
+                        <i class="fa-solid fa-robot" aria-hidden="true"></i>
+                    {% elif genre.name|lower == "psychological" %}
+                        <i class="fa-solid fa-brain" aria-hidden="true"></i>
+                    {% elif genre.name|lower == "parody" %}
+                        <i class="fa-solid fa-clone" aria-hidden="true"></i>
+                    {% elif genre.name|lower == "police" %}
+                        <i class="fa-solid fa-taxi"></i>
+                    {% elif genre.name|lower == "samurai" %}
+                        <i class="fa-solid fa-torii-gate"></i>
+                    {% elif genre.name|lower == "seinen" %}
+                        <i class="fa-solid fa-briefcase"></i>
+                    {% elif genre.name|lower == "music" %}
+                        <i class="fa-solid fa-music" aria-hidden="true"></i>
+                    {% elif genre.name|lower == "historical" %}
+                        <i class="fa-solid fa-landmark" aria-hidden="true"></i>
+                    {% elif genre.name|lower == "military" %}
+                        <i class="fa-solid fa-jet-fighter"></i>
+                    {% elif genre.name|lower == "school" %}
+                        <i class="fa-solid fa-school"></i>
+                    {% elif genre.name|lower == "shoujo" %}
+                        <i class="fa-solid fa-venus"></i>
+                    {% elif genre.name|lower == "shoujo ai" %}
+                        <i class="fa-solid fa-venus-double"></i>
+                    {% elif genre.name|lower == "space" %}
+                        <i class="fa-solid fa-shuttle-space"></i>
+                    {% elif genre.name|lower == "super power" %}
+                        <i class="fa-solid fa-meteor"></i>
+                    {% elif genre.name|lower == "thriller" %}
+                        <i class="fa-solid fa-user-secret"></i>
+                    {% elif genre.name|lower == "vampire" %}
+                        <i class="fa-solid fa-skull"></i>
+                    {% elif genre.name|lower == "shounen" %}
+                        <i class="fa-solid fa-fire" aria-hidden="true"></i>
+                    {% else %}
+                        <i class="fa-solid fa-film" aria-hidden="true"></i>
+                    {% endif %}
+                    <p>{{ genre.name }}</p>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </section>
+    {% else %}
+    <p>No genres found.</p>
+    {% endif %}
+{% endblock %}

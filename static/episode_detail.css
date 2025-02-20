@@ -164,12 +164,33 @@ body {
 }
 
 
+/* Footer */
 .footer {
+    margin-top: 50px;
+    padding: 30px 0;
+    border-top: 1px solid rgba(168, 168, 168, 0.1);
     text-align: center;
-    padding: 20px;
-    background: var(--card-background);
-    border-radius: 15px;
-    margin-top: 30px;
+}
+        
+.footer p {
+    color: var(--text-color);
+    font-size: 0.9rem;
+}
+        
+.social-links {
+    margin-top: 20px;
+}
+        
+.social-links a {
+    display: inline-block;
+    margin: 0 10px;
+    color: var(--text-color);
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+}
+        
+.social-links a:hover {
+    color: var(--primary-color);
 }
 
 
@@ -194,5 +215,27 @@ body {
     }
     .header h1 {
         font-size: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .episode-list {
+        height: 240px;
+    }
+
+    .sidebar-widget h2, .header-titles h2 {
+        font-size: 1.2rem;
+    }
+
+    .header-titles p, a.nav-button, .episode-list ul li a {
+        font-size: 0.9rem;
+    }
+
+    .header-titles h1 {
+        font-size: 1.6rem;
+    }
+
+    .nav-button {
+        padding: -.2rem .5rem;
     }
 }

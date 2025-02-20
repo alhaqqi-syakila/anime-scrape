@@ -1,14 +1,79 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Error - Haqqi Films</title>
     <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+    background-color: #15161b;
+    color: #ebebeb;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.error-container {
+    background: #23252b;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    text-align: center;
+}
+
+.error-container img {
+    width: 200px;
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #d9534f;
+}
+
+p {
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.btn-home {
+    display: inline-block;
+    padding: 12px 24px;
+    background: #f47521;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 8px;
+    transition: 0.3s ease;
+}
+
+.btn-home:hover {
+    background: #f85d2c;
+}
+
+.fa-solid {
+    font-size: 2rem;
+    color: #f47521;
+}
+
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <h1>Oops! Terjadi Kesalahan</h1>
+    <div class="error-container">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        <h1>Oops! There is an error</h1>
         <p>{{ message }}</p>
-        <a href="/">Kembali ke Halaman Utama</a>
+        <a href="/" class="btn-home">Return to Home Page</a>
     </div>
 </body>
 </html>

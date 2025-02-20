@@ -1,78 +1,200 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anime Terbaru - Haqqi Films</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="/static/style.css">
-</head>
-<body>
-    <div class="container">
-        <header class="site-header">
-            <div class="logo">
-                <i class="fas fa-play-circle"></i>
-                <h1>Haqqi Films</h1>
-            </div>
-            <div class="search-bar">
-                <input type="text" placeholder="Cari anime...">
-                <button type="submit"><i class="fas fa-search"></i></button>
-            </div>
-        </header>
+    <!DOCTYPE html>
+    <html lang="id">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Home - Hastream</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+        <link rel="stylesheet" href="/static/style.css">
+    </head>
+    <body>
+        <div class="container">
+            <header class="site-header">
+                <div class="logo">
+                    <i class="fa-solid fa-vihara"></i>
+                    <h1>Hastream</h1>
+                </div>
+                <div class="search-bar">
+                    <form action="/" method="get">
+                        <input type="hidden" name="post_type" value="anime">
+                        <input type="text" id="s" name="s" placeholder="Search anime..." value="{{ query }}" required>
+                        <button type="submit"><i class="fas fa-search"></i></button>
+                    </form>
+                </div>
+                <div class="btn-list">
+                    <a href="/" class="nav-button"> Home</a>
+                    <a href="/genre-list" class="nav-button">Genre List</a>
+                </div>
+            </header>
         
-        <h2>Anime Terbaru</h2>
+            <!-- Ongoing Anime Section -->  
+            <section class="anime-section">
+                <h2><i class="fas fa-fire"></i> Ongoing Anime</h2>
+                <div class="anime-grid">
+                    {% for anime in data[:15] %}
+                        <div class="anime-card">
+                            <div class="card-image-container">
+                                <span class="category">Ongoing</span>
+                                <a href="{{ anime.link }}" target="_blank">
+                                    <img src="{{ anime.image_url }}" alt="Gambar {{ anime.title }}">
+                                    <div class="overlay"></div>
+                                </a>
+                            </div>
+                            <div class="anime-info">
+                                <span class="date">{{ anime.date }}</span>
+                                <h3 class="title"><a href="{{ anime.link }}" target="_blank" title="{{ anime.title }}">{{ anime.title }}</a></h3>
+                                <p><i class="fas fa-video"></i> &nbsp; {{ anime.episode }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </section>
+
+            <!-- Completed Anime Section -->
+            <section class="anime-section" id="completed-section">
+                <h2><i class="fa-solid fa-location-crosshairs"></i> Completed Anime</h2>
+                <div class="anime-grid" id="completed-grid">
+                    {% for anime in data[-10:] %}
+                        <div class="anime-card">
+                            <div class="card-image-container">
+                                <span class="category completed">Completed</span>
+                                <a href="{{ anime.link }}" target="_blank">
+                                    <img src="{{ anime.image_url }}" alt="Gambar {{ anime.title }}">
+                                    <div class="overlay"></div>
+                                </a>
+                            </div>
+                            <div class="anime-info">
+                                <span class="date">{{ anime.date }}</span>
+                                <h3 class="title"><a href="{{ anime.link }}" target="_blank" title="{{ anime.title }}">{{ anime.title }}</a></h3>
+                                <p><i class="fas fa-video"></i> &nbsp;{{ anime.episode }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="load-more-container">
+                    <button id="load-more" class="load-more">
+                        <span>See More Anime</span>
+                        <div class="spinner" style="display: none;">
+                            <i class="fas fa-spinner fa-spin"></i>
+                        </div>
+                    </button>
+                </div>
+            </section>
         
-        <div class="anime-grid">
-            {% for anime in data %}
-                <div class="anime-card">
+            <footer class="footer">
+                <p>© 2025 Hastream. All rights reserved.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-discord"></i></a>
+                </div>
+            </footer>
+        </div>
+    
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Initial animations
+                animateSections();
+
+                // Load more functionality
+                let currentPage = 1;
+                let isLoading = false;
+                const loadMoreBtn = document.getElementById('load-more');
+                const completedGrid = document.getElementById('completed-grid');
+                const spinner = loadMoreBtn.querySelector('.spinner');
+                const btnText = loadMoreBtn.querySelector('span');
+
+                loadMoreBtn.addEventListener('click', async function() {
+                    if (isLoading) return;
+                    
+                    isLoading = true;
+                    spinner.style.display = 'inline-block';
+                    btnText.style.display = 'none';
+
+                    try {
+                        const response = await fetch(`/api/completed-anime/${currentPage + 1}`);
+                        const data = await response.json();
+
+                        if (data.anime_list && data.anime_list.length > 0) {
+                            // Add new anime cards
+                            data.anime_list.forEach(anime => {
+                                const card = createAnimeCard(anime);
+                                completedGrid.appendChild(card);
+                                
+                                // Animate the new card
+                                setTimeout(() => {
+                                    card.style.opacity = 1;
+                                    card.style.transform = 'translateY(0)';
+                                }, 100);
+                            });
+
+                            currentPage = data.current_page;
+                            
+                            // Hide button if we're on the last page
+                            if (currentPage >= data.last_page) {
+                                loadMoreBtn.style.display = 'none';
+                            }
+                        } else {
+                            loadMoreBtn.style.display = 'none';
+                        }
+                    } catch (error) {
+                        console.error('Error loading more anime:', error);
+                        alert('Gagal memuat anime tambahan. Silakan coba lagi.');
+                    }
+
+                    isLoading = false;
+                    spinner.style.display = 'none';
+                    btnText.style.display = 'inline';
+                });
+            });
+
+            function createAnimeCard(anime) {
+                const card = document.createElement('div');
+                card.className = 'anime-card';
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+
+                card.innerHTML = `
                     <div class="card-image-container">
-                        <span class="category">Series</span>
-                        <a href="{{ anime.link }}" target="_blank">
-                            <img src="{{ anime.image_url }}" alt="Gambar {{ anime.title }}">
+                        <span class="category completed">Completed</span>
+                        <a href="${anime.link}" target="_blank">
+                            <img src="${anime.image_url}" alt="Gambar ${anime.title}">
                             <div class="overlay"></div>
                         </a>
                     </div>
                     <div class="anime-info">
-                        <span class="date">{{ anime.date }}</span>
-                        <h3 class="title"><a href="{{ anime.link }}" target="_blank">{{ anime.title }}</a></h3>
-                        <p><i class="fas fa-video"></i> {{ anime.episode }}</p>
+                        <span class="date">${anime.date}</span>
+                        <h3 class="title"><a href="${anime.link}" target="_blank">${anime.title}</a></h3>
+                        <p><i class="fas fa-video"></i>&nbsp; ${anime.status}</p>
                     </div>
-                </div>
-            {% endfor %}
-        </div>
-        
-        <a href="#" class="load-more">Lihat Lebih Banyak</a>
-        
-        <footer class="footer">
-            <p>© 2025 Haqqi Films. Semua hak dilindungi.</p>
-            <div class="social-links">
-                <a href="#"><i class="fab fa-facebook"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-youtube"></i></a>
-                <a href="#"><i class="fab fa-discord"></i></a>
-            </div>
-        </footer>
-    </div>
-    
-    <script>
-        // Add some simple animations when the page loads
-        document.addEventListener('DOMContentLoaded', function() {
-            const cards = document.querySelectorAll('.anime-card');
-            
-            cards.forEach((card, index) => {
-                setTimeout(() => {
-                    card.style.opacity = 0;
-                    card.style.transform = 'translateY(20px)';
-                    card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                `;
+
+                return card;
+            }
+
+            function animateSections() {
+                const sections = document.querySelectorAll('.anime-section');
+                
+                sections.forEach((section, sectionIndex) => {
+                    const cards = section.querySelectorAll('.anime-card');
                     
-                    setTimeout(() => {
-                        card.style.opacity = 1;
-                        card.style.transform = 'translateY(0)';
-                    }, 100);
-                }, index * 100);
-            });
-        });
-    </script>
-</body>
-</html>
+                    cards.forEach((card, index) => {
+                        setTimeout(() => {
+                            card.style.opacity = 0;
+                            card.style.transform = 'translateY(20px)';
+                            card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                            
+                            setTimeout(() => {
+                                card.style.opacity = 1;
+                                card.style.transform = 'translateY(0)';
+                            }, 100);
+                        }, (sectionIndex * 500) + (index * 100));
+                    });
+                });
+            }
+        </script>
+    </body>
+    </html>
