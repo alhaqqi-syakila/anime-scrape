@@ -24,6 +24,12 @@
         .genre-tags {
             margin: 0;
         }
+
+        hr  {
+            border: none;
+            height: 2px;
+            background-color: #e74500;
+        }
     </style>
 </head>
 <body>
@@ -40,10 +46,10 @@
                 
                 <!-- Basic details section -->
                 <div class="basic-details">
-                    <h2>Anime Details</h2>
                     
                     <!-- Score with star icon -->
                     <div class="info-item">
+                        <span class="info-label">Rating</span>
                         <div class="score-badge">
                             <i class="fas fa-star"></i>
                             {{ anime.score if anime.score else 'N/A' }}
@@ -83,6 +89,7 @@
                 </div>
             </div>
             
+            <hr>
             <!-- Synopsis section - full width -->
             <div class="synopsis-section">
                 <span class="info-label">Synopsis</span>

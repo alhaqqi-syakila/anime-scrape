@@ -9,7 +9,7 @@
             {% for anime in anime_list %}
             <div class="anime-card">
                 <div class="card-image-container">
-                    <span class="category">{{anime.rating if anime.rating else 'N/A'}}</span>
+                    <span class="category"><i class="fa fa-star" aria-hidden="true"></i> {{anime.rating if anime.rating else 'N/A'}}</span>
                     <a href="{{ anime.detail_url }}" target="_blank">
                         <img src="{{ anime.cover_url }}" alt="Gambar {{ anime.title }}">
                         <div class="overlay"></div>

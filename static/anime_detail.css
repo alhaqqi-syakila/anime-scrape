@@ -1,22 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 :root {
-    --primary-color: #f47521;
+    --primary-color: #e74500;
+    --yellow-color: #ffbf00;
     --secondary-color: #23252b;
     --white-color: #ffffff;
-    --text-color: #a8a8a8;
+    --grey-color: #9d9d9d;
+    --text-color: #ebebeb;
     --background-color: #15161b;
     --card-background: #23252b;
-    --hover-color: #f85d2c;
-    --border-color: #393b40;
+    --page-btn-background: #23252b;
+    --hover-color: #8b2000;
+    --hover-trans-color: #f85c2c2f;
+    --gradient-overlay: linear-gradient(0deg, rgba(35,37,43,0.9) 0%, rgba(35,37,43,0) 100%);
 }
 
 body {
     margin: 0;
     padding: 0;
-    font-family: 'Helvetica Neue', Arial, sans-serif;
-    background-color: var(--background-color);
-    color: var(--text-color);
+    font-family: 'Poppins';
+    background-color:var(--background-color);
+    color: #ffffff;
     line-height: 1.6;
-}
+    transition: background-position 1s ease;
+    background-color: #000;
+    background-image: 
+      linear-gradient(to right, #ffffff2b 1px, transparent 1px),
+      linear-gradient(to bottom, #ffffff2b 1px, transparent 1px),
+      radial-gradient(ellipse at center, rgba(0,0,0,0) 0%, rgba(0,0,0,0.85) 80%, rgba(0,0,0,1) 100%);
+    background-size: 40px 40px, 40px 40px, 100% 100%;
+    background-blend-mode: normal, normal, darken;
+    scroll-behavior: smooth;
+  }
 
 .container {
     max-width: 1200px;
@@ -26,9 +41,9 @@ body {
 
 h1 {
     color: var(--primary-color);
-    font-size: 2.5rem;
-    margin-bottom: 30px;
-    font-weight: 700;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-left: 20px;
 }
 
 /* Main card container */
@@ -86,7 +101,7 @@ h1 {
     color: var(--white-color);
     padding: 4px 12px;
     border-radius: 20px;
-    font-weight: bold;
+    font-weight: 600;
     margin-bottom: 10px;
 }
 
@@ -145,7 +160,7 @@ h1 {
 }
 
 .read-more-button:hover {
-    background-color: var(--hover-color);
+    box-shadow: #e74500b0 4px 4px 0px 0px;
 }
 
 
@@ -209,8 +224,10 @@ h1 {
 /* Episode section */
 h2.episode-header {
     color: var(--primary-color);
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     margin: 40px 0 20px;
+    font-weight: 600;
+    margin-left: 20px;
 }
 
 .episode-grid {
@@ -230,7 +247,7 @@ h2.episode-header {
 
 .episode-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(244, 117, 33, 0.3);
+    box-shadow: #e74500b0 4px 4px 0px 0px;
     background-color: var(--secondary-color);
 }
 
@@ -294,3 +311,24 @@ h2.episode-header {
         font-size: 0.9rem;
     }
 }   
+
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track (jalur scroll) */
+  ::-webkit-scrollbar-track {
+    background: #111; /* warna dasar jalur */
+  }
+  
+  /* Thumb (pegangan yang bisa digeser) */
+  ::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.4); /* warna thumb */
+    border-radius: 8px;
+    border: 2px solid #000; /* biar ada jarak & kontras */
+  }
+  
+  /* Hover effect */
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(255, 255, 255, 0.7);
+  }

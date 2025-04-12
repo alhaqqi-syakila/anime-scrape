@@ -1,6 +1,9 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 /* Variables */
 :root {
-    --primary-color: #f47521;
+    --primary-color: #e74500;
     --yellow-color: #ffbf00;
     --secondary-color: #23252b;
     --white-color: #ffffff;
@@ -9,7 +12,7 @@
     --background-color: #15161b;
     --card-background: #23252b;
     --page-btn-background: #23252b;
-    --hover-color: #f85d2c;
+    --hover-color: #8b2000;
     --hover-trans-color: #f85c2c2f;
     --gradient-overlay: linear-gradient(0deg, rgba(35,37,43,0.9) 0%, rgba(35,37,43,0) 100%);
 }
@@ -25,11 +28,20 @@
 body {
     margin: 0;
     padding: 0;
-    font-family: 'Helvetica Neue', Arial, sans-serif;
-    background-color: var(--background-color);
-    color: var(--text-color);
+    font-family: 'Poppins';
+    background-color:var(--background-color);
+    color: #ffffff;
     line-height: 1.6;
-}
+    transition: background-position 1s ease;
+    background-color: #000;
+    background-image: 
+      linear-gradient(to right, #ffffff2b 1px, transparent 1px),
+      linear-gradient(to bottom, #ffffff2b 1px, transparent 1px),
+      radial-gradient(ellipse at center, #00000000 0%, #000000d9 80%, #000000 100%);
+    background-size: 40px 40px, 40px 40px, 100% 100%;
+    background-blend-mode: normal, normal, darken;
+    scroll-behavior: smooth;
+  }
 
 .container {
     max-width: 1200px;
@@ -61,15 +73,16 @@ body {
 .logo h1 {
     margin: 0;
     font-size: 1.8rem;
-    background: linear-gradient(90deg, var(--primary-color), var(--hover-color));
+    /* background: linear-gradient(90deg, var(--primary-color), var(--hover-color));
     -webkit-background-clip: text;
     background-clip: text;
-    -webkit-text-fill-color: transparent;
+    -webkit-text-fill-color: transparent; */
+    color: var(--white-color);
 }
 
 /* Navigation */
 .nav-button {
-    color: var(--text-color);
+    color: var(--white-color);
     font-size: 1rem;
     background-color: var(--primary-color);
     padding: .4rem 1rem;
@@ -82,14 +95,23 @@ body {
 }
 
 .nav-button:hover {
-    background-color:var(--hover-color);
-    color: var(--white-color);
+    transform: translateY(-2px);
+    box-shadow: var(--hover-color) 4px 4px 0px 0px;
 }
 
 .nav-button:active {
     transform: scale(.98);
     background-color:var(--hover-color);
     color: var(--white-color);
+}
+
+.img-hero {
+    border-radius: .6rem;
+}
+
+.img-hero:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--hover-color) 8px 8px 0px 0px;
 }
 
 .btn-list {
@@ -205,7 +227,7 @@ h2::after {
 }
 
 .anime-card:hover {
-    box-shadow: 0 15px 25px rgba(244, 117, 33, 0.25);
+    box-shadow: var(--hover-color) 0px 4px 0px 0px;
 }
 
 .overlay {
@@ -230,7 +252,7 @@ h2::after {
 
 .anime-info .title a {
     margin: 0 0 1rem 0;
-    font-size: 1.1rem;
+    font-size: 1rem;
     line-height: 1.4;
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -239,7 +261,7 @@ h2::after {
     text-overflow: ellipsis;
     max-height: 2.8em;
     transition: color 0.3s ease;
-    font-weight: 600;
+    font-weight: 500;
     color: var(--text-color);
     text-decoration: none;
 }
@@ -279,12 +301,17 @@ h2::after {
     top: 15px;
     left: 15px;
     background-color: rgba(35, 37, 43, 0.8);
-    color: var(--primary-color);
+    color: var(--text-color);
     padding: 5px 10px;
     border-radius: 4px;
     font-size: 0.75rem;
     font-weight: bold;
     z-index: 2;
+}
+
+.fa-star {
+    color:var(--primary-color);
+    font-size: .7rem;
 }
 
 .date {
@@ -296,7 +323,7 @@ h2::after {
     padding: 5px 12px;
     border-radius: .4rem;
     font-size: 0.85rem;
-    font-weight: bold;
+    font-weight: 500;
     z-index: 999;
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
 }
@@ -311,7 +338,7 @@ h2::after {
     transition: background-color 0.2s;
 }
 
-.genre-badge:hover {
+.genre-badge:hover {    
     color: var(--hover-color);
 }
 
@@ -343,7 +370,7 @@ h2::after {
 
 .bento-box:hover {
     transform: translateY(-5px);
-    box-shadow: 0 15px 25px rgba(244, 117, 33, 0.25);
+    box-shadow: var(--hover-color) 4px 4px 0px 0px;
 }
 
 .bento-box:hover p,
@@ -457,8 +484,9 @@ h2::after {
 }
 
 .load-more {
-    background-color: var(--card-background);
-    border: 2px solid var(--primary-color);
+    background-color: var(--primary-color);
+    border:0px solid transparent;
+    outline: none;
     color: var(--text-color);
     padding: .8rem 2rem;
     width: 200px;
@@ -470,14 +498,22 @@ h2::after {
 }
 
 .load-more:hover {
-    background-color:var(--background-color);
-    border-color:var(--hover-color);
-    color: var(--white-color);
-    transform: scale(1.01);
+    transform: translateY(-2px);
+    box-shadow: var(--hover-color) 6px 6px 0px 0px;
 }
 
 .load-more:active {
     transform: scale(.98);
+}
+
+.load-more span {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--white-color);
+}
+
+.fa-location-crosshairs, .fa-fire {
+    color: var(--primary-color);
 }
 
 /* Footer */
@@ -579,6 +615,12 @@ h2::after {
 }
 
 @media (max-width: 480px) {
+    .nav-button {
+        background-color: transparent;
+        padding: 0;
+        color: var(--primary-color);
+    }
+
     .anime-grid {
         grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
         gap: 15px;
@@ -630,3 +672,24 @@ h2::after {
         font-size: 0.8rem;
     }
 }
+
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track (jalur scroll) */
+  ::-webkit-scrollbar-track {
+    background: #111; /* warna dasar jalur */
+  }
+  
+  /* Thumb (pegangan yang bisa digeser) */
+  ::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.4); /* warna thumb */
+    border-radius: 8px;
+    border: 2px solid #000; /* biar ada jarak & kontras */
+  }
+  
+  /* Hover effect */
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(255, 255, 255, 0.7);
+  }

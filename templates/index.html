@@ -26,7 +26,7 @@
                     <a href="/genre-list" class="nav-button">Genre List</a>
                 </div>
             </header>
-        
+            <img src="{{ url_for('static', filename='images/hero3.png') }}" alt="Hero Image" width="100%" class="img-hero">
             <!-- Ongoing Anime Section -->  
             <section class="anime-section">
                 <h2><i class="fas fa-fire"></i> Ongoing Anime</h2>
@@ -34,14 +34,14 @@
                     {% for anime in data[:15] %}
                         <div class="anime-card">
                             <div class="card-image-container">
-                                <span class="category">Ongoing</span>
+                                <span class="category"><i class="fa-solid fa-fire"></i> Ongoing</span>
                                 <a href="{{ anime.link }}" target="_blank">
                                     <img src="{{ anime.image_url }}" alt="Gambar {{ anime.title }}">
                                     <div class="overlay"></div>
                                 </a>
                             </div>
                             <div class="anime-info">
-                                <span class="date">{{ anime.date }}</span>
+                                <span class="date">release {{ anime.date }}</span>
                                 <h3 class="title"><a href="{{ anime.link }}" target="_blank" title="{{ anime.title }}">{{ anime.title }}</a></h3>
                                 <p><i class="fas fa-video"></i> &nbsp; {{ anime.episode }}</p>
                             </div>
@@ -57,14 +57,14 @@
                     {% for anime in data[-10:] %}
                         <div class="anime-card">
                             <div class="card-image-container">
-                                <span class="category completed">Completed</span>
+                                <span class="category completed"><i class="fa-solid fa-location-crosshairs"></i> Completed</span>
                                 <a href="{{ anime.link }}" target="_blank">
                                     <img src="{{ anime.image_url }}" alt="Gambar {{ anime.title }}">
                                     <div class="overlay"></div>
                                 </a>
                             </div>
                             <div class="anime-info">
-                                <span class="date">{{ anime.date }}</span>
+                                <span class="date">release {{ anime.date }}</span>
                                 <h3 class="title"><a href="{{ anime.link }}" target="_blank" title="{{ anime.title }}">{{ anime.title }}</a></h3>
                                 <p><i class="fas fa-video"></i> &nbsp;{{ anime.episode }}</p>
                             </div>
@@ -159,7 +159,7 @@
 
                 card.innerHTML = `
                     <div class="card-image-container">
-                        <span class="category completed">Completed</span>
+                        <span class="category completed"><i class="fa-solid fa-location-crosshairs"></i> Completed</span>
                         <a href="${anime.link}" target="_blank">
                             <img src="${anime.image_url}" alt="Gambar ${anime.title}">
                             <div class="overlay"></div>
