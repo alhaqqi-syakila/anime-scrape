@@ -23,7 +23,6 @@ body {
     color: #ffffff;
     line-height: 1.6;
     transition: background-position 1s ease;
-    background-color: #000;
     background-image: 
       linear-gradient(to right, #ffffff2b 1px, transparent 1px),
       linear-gradient(to bottom, #ffffff2b 1px, transparent 1px),
@@ -297,6 +296,12 @@ h2.episode-header {
     }
     h1, .basic-details h2, h2.episode-header {
         font-size: 1.2rem;
+    }
+
+    h2.episode-header, h1 {
+        margin-bottom: -1rem;
+        margin-left: 0;
+        text-align: center;
     }
 
     .score-badge, .info-item, .synopsis-section .info-label {

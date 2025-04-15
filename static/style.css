@@ -33,7 +33,6 @@ body {
     color: #ffffff;
     line-height: 1.6;
     transition: background-position 1s ease;
-    background-color: #000;
     background-image: 
       linear-gradient(to right, #ffffff2b 1px, transparent 1px),
       linear-gradient(to bottom, #ffffff2b 1px, transparent 1px),
@@ -73,11 +72,10 @@ body {
 .logo h1 {
     margin: 0;
     font-size: 1.8rem;
-    /* background: linear-gradient(90deg, var(--primary-color), var(--hover-color));
+    background: linear-gradient(90deg, var(--primary-color), var(--white-color));
     -webkit-background-clip: text;
     background-clip: text;
-    -webkit-text-fill-color: transparent; */
-    color: var(--white-color);
+    -webkit-text-fill-color: transparent; 
 }
 
 /* Navigation */
@@ -619,6 +617,13 @@ h2::after {
         background-color: transparent;
         padding: 0;
         color: var(--primary-color);
+    }
+
+    .nav-button:hover{
+        background-color: transparent;
+        padding: 0;
+        color: var(--hover-color);
+        box-shadow: none;
     }
 
     .anime-grid {
