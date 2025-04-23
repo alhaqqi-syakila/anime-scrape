@@ -3,14 +3,15 @@
 :root {
     --primary-color: #e74500;
     --yellow-color: #ffbf00;
-    --secondary-color: #23252b;
+    --secondary-color: #1a1b1f;
     --white-color: #ffffff;
     --grey-color: #9d9d9d;
     --text-color: #ebebeb;
     --background-color: #15161b;
-    --card-background: #23252b;
+    --card-background: #131418;
     --page-btn-background: #23252b;
     --hover-color: #8b2000;
+    --border-color: #711a00;
     --hover-trans-color: #f85c2c2f;
     --gradient-overlay: linear-gradient(0deg, rgba(35,37,43,0.9) 0%, rgba(35,37,43,0) 100%);
 }
@@ -22,17 +23,15 @@ body {
     background-color:var(--background-color);
     color: #ffffff;
     line-height: 1.6;
+    transition: background-position 1s ease;
+    scroll-behavior: smooth;
   }
 
 
 .page-wrapper {
     min-height: 100vh;
     transition: background-position 1s ease;
-    background-image: 
-      linear-gradient(to right, #ffffff2b 1px, transparent 1px),
-      linear-gradient(to bottom, #ffffff2b 1px, transparent 1px),
-      radial-gradient(ellipse at center, rgba(0,0,0,0) 0%, rgba(0,0,0,0.85) 80%, rgba(0,0,0,1) 100%);
-    background-size: 40px 40px, 40px 40px, 100% 100%;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect width='40' height='40' fill='black'/%3E%3Cpath d='M40 0H0V40' fill='none' stroke='white' stroke-width='1' opacity='0.2'/%3E%3C/svg%3E");
     background-blend-mode: normal, normal, darken;
     scroll-behavior: smooth;
 }
